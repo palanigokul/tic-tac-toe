@@ -1,3 +1,4 @@
+from copy import deepcopy
 class tic():
     let=[[' ', ' ', ' '], 
          [' ', ' ', ' '], 
@@ -38,13 +39,13 @@ class tic():
                        
     # main function is used to call all the functions
     def main(self):
-        self.playwith = input(f'Please select the mode :\n 1. Two Player \n 2. Play with Computer \n Enter the number to  select the mode : ')
+        self.playwith = input(f'Please select the mode :\n 1. Two Player \n 2. Play with Computer \n Enter the number to  select the mode (1 or 2) : ')
         if self.playwith == '1' :
             self.Player1=input('Enter First Player Name : ')
             self.Player2=input("Enter Second player Name : ")
             if self.Player1==self.Player2:
                 print("please check the Name. both name's are same")
-                self.Player2=input("Enter Second player Name : ")
+                self.Player2=input("Enter Second player Name : ") 
                 if self.Player1==self.Player2:
                     se=input("Are you Sure (y/n):").lower()
                     if se!="y":
@@ -168,7 +169,7 @@ class tic():
             self.easy()
         elif self.typ=="2":
             print('try any other level')
-            # self.medium()
+            self.medium()
         elif self.typ=="3":
             self.hard()
         else:
@@ -231,7 +232,7 @@ class tic():
                 self.let[0][0]="O"
                 return 1
             elif self.let[0][2]==' ':
-                self.let[0][2]="O"
+                self.let[0][2]="O"  
                 return 1
             elif self.let[2][0]==' ':
                 self.let[2][0]="O"
@@ -302,10 +303,37 @@ class tic():
 
         elif self.let[1][1]==' 'and self.let[0][1]!=' ' and self.let[1][0]!=' ' and self.let[1][2]!=' ' and self.let[2][1]!=' ':
             self.let[1][1]='O'
+        
+        elif self.let[0][0]==' ':
+            self.let[0][0]='O'
+
+        elif self.let[0][1]==' ':
+            self.let[0][1]='O'
+
+        elif self.let[0][2]==' ':
+            self.let[0][2]='O'
+
+        elif self.let[1][0]==' ':
+            self.let[1][0]='O'
+
+        elif self.let[1][1]==' ':
+            self.let[1][1]='O'
+
+        elif self.let[1][2]==' ':
+            self.let[1][2]='O'
+
+        elif self.let[2][1]==' ':
+            self.let[2][1]='O'
+
+        elif self.let[2][0]==' ':
+            self.let[2][0]='O'
+
+        elif self.let[2][2]==' ':
+            self.let[2][2]='O'
 
         else:
             print(f"No more move to win \n GAME is TIE")
-            quit()
+            self.resume()
 
     def lenmove(self):
 
@@ -368,14 +396,97 @@ class tic():
             return 0
         
     def medlevel(self):
-
-        if self.let[1][1]==" " and (self.let[0][0]=='X' or self.let[0][1]=='X' or self.let[0][2]=='X' or self.let[1][0]=='X' or self.let[1][2]=='X' or self.let[2][1]=='X' or self.let[2][2]=='X'):
+        # if self.let[1][1]=='O' and self.let[0][0]=='X' and self.let[0][1]==' ' and self.let[0][2]==' ' and self.let[1][0]==' ' and self.let[1][2]==' ' and self.let[2][1]==' ' and  self.let[2][0]==' ' and self.let[2][2]==' ':
+        #     self.let[][]='O'
+        #     return 1
+        if self.let[1][1]==" " and (self.let[0][0]=='X' or self.let[0][1]=='X' or self.let[0][2]=='X' or self.let[1][0]=='X' or self.let[1][2]=='X' or self.let[2][1]=='X'or self.let[2][0]=='X' or self.let[2][2]=='X'):
             self.let[1][1]='O'
             return 1
-        elif self.let[0][0]==' ' and (self.let[0][0]=='X' or self.let[0][1]=='X' or self.let[0][2]=='X' or self.let[1][0]=='X' or self.let[1][2]=='X' or self.let[2][1]=='X' or self.let[2][2]=='X'):
+        elif self.let[0][0]==' ' and (self.let[1][1]=='X' or self.let[0][1]=='X' or self.let[0][2]=='X' or self.let[1][0]=='X' or self.let[1][2]=='X' or self.let[2][1]=='X' or self.let[2][0]=='X'or self.let[2][2]=='X'):
             self.let[0][0]='O'
             return 1
-        
+        #------------------------------------------->
+        elif self.let[0][0]=="O" and self.let[1][1]==" " and self.let[2][0]=="O" and ((self.let[0][2]==" " and self.let[2][2]==" ")or(self.let[0][2]==" " and self.let[1][0]==" ")or(self.let[1][0]==" " and self.let[2][2]==" ")):
+            self.let[1][1]="O"
+            return 1
+        elif self.let[0][0]==" " and self.let[1][1]=="O" and self.let[2][0]=="O" and ((self.let[0][2]==" " and self.let[2][2]==" ")or(self.let[0][2]==" " and self.let[1][0]==" ")or(self.let[1][0]==" " and self.let[2][2]==" ")):
+            self.let[0][0]="O"
+            return 1
+        elif self.let[0][0]=="O" and self.let[1][1]=="O" and self.let[2][0]==" " and ((self.let[0][2]==" " and self.let[2][2]==" ")or(self.let[0][2]==" " and self.let[1][0]==" ")or(self.let[1][0]==" " and self.let[2][2]==" ")):
+            self.let[2][0]="O"
+            return 1
+        # ----------------------------------------------<
+        elif self.let[0][2]=="O" and self.let[1][1]==" " and self.let[2][2]=="O" and ((self.let[0][0]==" " and self.let[2][0]==" ")or(self.let[0][0]==" " and self.let[1][2]==" ")or(self.let[1][2]==" " and self.let[2][0]==" ")):
+            self.let[1][1]="O"
+            return 1
+        elif self.let[0][2]==" " and self.let[1][1]=="O" and self.let[2][2]=="O" and ((self.let[0][0]==" " and self.let[2][0]==" ")or(self.let[0][0]==" " and self.let[1][2]==" ")or(self.let[1][2]==" " and self.let[2][0]==" ")):
+            self.let[0][2]="O"
+            return 1
+        elif self.let[0][2]=="O" and self.let[1][1]=="O" and self.let[2][2]==" " and ((self.let[0][0]==" " and self.let[2][0]==" ")or(self.let[0][0]==" " and self.let[1][2]==" ")or(self.let[1][2]==" " and self.let[2][0]==" ")):
+            self.let[2][2]="O"
+            return 1
+        # --------------------------------------------v
+        elif self.let[0][0]=="O" and self.let[1][1]==" " and self.let[0][2]=="O" and ((self.let[0][2]==" " and self.let[2][2]==" ")or(self.let[0][2]==" " and self.let[0][1]==" ")or(self.let[2][2]==" " and self.let[0][1]==" ")):
+            self.let[1][1]="O"
+            return 1
+        elif self.let[0][0]==" " and self.let[1][1]=="O" and self.let[0][2]=="O" and ((self.let[0][2]==" " and self.let[2][2]==" ")or(self.let[0][2]==" " and self.let[0][1]==" ")or(self.let[2][2]==" " and self.let[0][1]==" ")):
+            self.let[0][0]="O"
+            return 1
+        elif self.let[0][0]=="O" and self.let[1][1]=="O" and self.let[0][2]==" " and ((self.let[0][2]==" " and self.let[2][2]==" ")or(self.let[0][2]==" " and self.let[0][1]==" ")or(self.let[2][2]==" " and self.let[0][1]==" ")):
+            self.let[0][2]="O"
+            return 1
+        # ----------------------------------------^
+        elif self.let[2][0]=="O" and self.let[1][1]==" " and self.let[2][2]=="O" and ((self.let[0][0]==" " and self.let[0][2]==" ")or(self.let[0][2]==" " and self.let[2][1]==" ")or(self.let[2][1]==" " and self.let[0][0]==" ")):
+            self.let[1][1]="O"
+            return 1
+        elif self.let[2][0]==" " and self.let[1][1]=="O" and self.let[2][2]=="O" and ((self.let[0][0]==" " and self.let[0][2]==" ")or(self.let[0][2]==" " and self.let[2][1]==" ")or(self.let[2][1]==" " and self.let[0][0]==" ")):
+            self.let[2][0]="O"
+            return 1
+        elif self.let[2][0]=="O" and self.let[1][1]=="O" and self.let[2][2]==" " and ((self.let[0][0]==" " and self.let[0][2]==" ")or(self.let[0][2]==" " and self.let[2][1]==" ")or(self.let[2][1]==" " and self.let[0][0]==" ")):
+            self.let[2][2]="O"
+            return 1
+        # ----------------------_|
+        elif self.let[1][0]=="O" and self.let[1][1]==" " and self.let[0][1]=="O" and self.let[2][1]==" " and self.let[1][2]==" ":
+            self.let[1][1]="O"
+            return 1
+        elif self.let[1][0]==" " and self.let[1][1]=="O" and self.let[0][1]=="O" and self.let[2][1]==" " and self.let[1][2]==" ":
+            self.let[1][0]="O"
+            return 1
+        elif self.let[1][0]=="O" and self.let[1][1]=="O" and self.let[0][1]==" " and self.let[2][1]==" " and self.let[1][2]==" ":
+            self.let[0][1]="O"
+            return 1
+        # -------------------------------|_
+        elif self.let[1][2]=="O" and self.let[1][1]==" " and self.let[0][1]=="O" and self.let[2][1]==" " and self.let[1][0]==" ":
+            self.let[1][1]="O"
+            return 1
+        elif self.let[1][2]==" " and self.let[1][1]=="O" and self.let[0][1]=="O" and self.let[2][1]==" " and self.let[1][0]==" ":
+            self.let[1][2]="O"
+            return 1
+        elif self.let[1][2]=="O" and self.let[1][1]=="O" and self.let[0][1]==" " and self.let[2][1]==" " and self.let[1][0]==" ":
+            self.let[0][1]="O"
+            return 1
+        # ---------------------------------|``
+        elif self.let[1][2]=="O" and self.let[1][1]==" " and self.let[2][1]=="O" and self.let[0][1]==" " and self.let[1][0]==" ":
+            self.let[1][1]="O"
+            return 1
+        elif self.let[1][2]==" " and self.let[1][1]=="O" and self.let[2][1]=="O" and self.let[0][1]==" " and self.let[1][0]==" ":
+            self.let[1][2]="O"
+            return 1
+        elif self.let[1][2]=="O" and self.let[1][1]=="O" and self.let[2][1]==" " and self.let[0][1]==" " and self.let[1][0]==" ":
+            self.let[0][1]="O"
+            return 1
+        # ----------------------------------``|
+        elif self.let[1][0]=="O" and self.let[1][1]==" " and self.let[2][1]=="O" and self.let[0][1]==" " and self.let[1][2]==" ":
+            self.let[1][1]="O"
+            return 1
+        elif self.let[1][0]==" " and self.let[1][1]=="O" and self.let[2][1]=="O" and self.let[0][1]==" " and self.let[1][2]==" ":
+            self.let[1][0]="O"
+            return 1
+        elif self.let[1][0]=="O" and self.let[1][1]=="O" and self.let[2][1]==" " and self.let[0][1]==" " and self.let[1][2]==" ":
+            self.let[2][1]="O"
+            return 1
+            
+
         else :
             return 0
 
@@ -524,6 +635,9 @@ class tic():
         elif self.let[2][2]=='X' and self.let[1][2]==' 'and self.let[0][2]=='X':
             self.let[1][2]='O'
             return 1
+        elif self.let[2][2]=='X' and self.let[1][2]=='X'and self.let[0][2]==' ':
+            self.let[0][2]='O'
+            return 1
         elif self.let[2][0]=='X' and self.let[1][1]==' 'and self.let[0][2]=='X':      #---------------------------------------
             self.let[1][1]='O'
             return 1
@@ -534,8 +648,20 @@ class tic():
             self.let[1][0]='O'
             return 1
         
+        elif self.let[2][1]=='X' and self.let[2][0]==' ' and self.let[2][2]=='X':
+            self.let[2][0]='O'
+            return 1
+        
         elif self.let[2][2]=='X' and self.let[2][1]==' ' and self.let[2][0]=='X':
             self.let[2][1]='O'
+            return 1
+        
+        elif self.let[2][0]=='X' and self.let[1][1]=='X' and self.let[0][2]==' ':
+            self.let[0][2]='O'
+            return 1
+
+        elif self.let[2][0]=='X' and self.let[1][0]=='X' and self.let[0][0]==' ':
+            self.let[0][0]='O'
             return 1
     #  ----------------------------------------------------------
         # 9
@@ -548,6 +674,9 @@ class tic():
             return 1
         elif self.let[2][0]=='X' and self.let[2][1]==' ' and self.let[2][2]=='X':
             self.let[2][1]='O'
+            return 1
+        elif self.let[2][0]=='X' and self.let[2][1]=='X' and self.let[2][2]==' ':
+            self.let[2][2]='O'
             return 1
     #  ----------------------------------------------------------
     # 5
@@ -579,10 +708,10 @@ class tic():
 
 
     def resume(self):
-        tac=input('you want to restart the game enter(y/Y) else any other key to exit : ').upper()
-        if tac=="Y":
-            self.let=self.const
-            self.count=0
+        self.tac=input('you want to restart the game enter(y/Y) else just enter to exit : ').upper()
+        if self.tac=="Y":
+            self.let =deepcopy(self.const)
+            self.count = 0
             self.main()
         
         else:
