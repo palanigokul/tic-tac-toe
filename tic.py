@@ -40,10 +40,10 @@ class tic():
                        
     # main function is used to call all the functions
     def main(self):
-        self.playwith = input(f'Please select the mode :\n 1. Two Player \n 2. Play with Computer \n Enter the number to  select the mode (1 or 2) : ')
+        self.playwith = input(f'Please select the mode :\n\n 1. Two Player \n\n 2. Play with Computer \n\n Enter the number to  select the mode (1 or 2) : ')
         if self.playwith == '1' :
-            self.Player1=input('Enter First Player Name : ')
-            self.Player2=input("Enter Second player Name : ")
+            self.Player1=input('\nEnter First Player Name : ')
+            self.Player2=input("\nEnter Second player Name : ")
             if self.Player1==self.Player2:
                 print("please check the Name. both name's are same")
                 self.Player2=input("Enter Second player Name : ") 
@@ -55,7 +55,7 @@ class tic():
             self.move()
         elif self.playwith == '2':
             self.Player1=input('Enter Player Name : ')
-            self.typ=input(f'1 - EASY\n2 - MEDIUM\n3 - HARD\nEnter level you want to play:')
+            self.typ=input(f'1 - EASY\n2 - MEDIUM\n3 - HARD\n\nEnter level you want to play:')
             if self.typ in ['1','2','3']:
                 self.ins()
             self.comp()
@@ -280,9 +280,9 @@ class tic():
             self.let[2][2]='O'
             return 1
         
-        elif self.let[0][0]=='O' and self.let[2][0]=='O'and self.let[0][2]==' ' and self.let[1][1]==' ' and self.let[1][2]==' ' and self.let[0][1]=='X':  
-            self.let[0][2]='O'
-            return 1
+        # elif self.let[0][0]=='O' and self.let[2][0]=='O'and self.let[0][2]==' ' and self.let[1][1]==' ' and self.let[1][2]==' ' and self.let[0][1]=='X':  
+        #     self.let[0][2]='O'
+        #     return 1
         elif self.let[0][0]=='O' and self.let[2][0]=='O'and self.let[0][2]==' ' and self.let[1][1]==' ' and self.let[1][2]=='X' and self.let[0][1]==' ':  
             self.let[0][2]='O'
             return 1
